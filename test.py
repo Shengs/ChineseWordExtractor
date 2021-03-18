@@ -12,30 +12,33 @@ news = open(
 
 # existing words count 85581
 
+gened_words = []
 new_words = []
 
 ws = WordSegment(news, max_word_len=8, min_freq=0.00005, min_aggregation=50, min_entropy=1)
 # sg = ws.segSentence(news)
 rs = ws.words
+     
+print("All gened words:", len(rs))
 
-labels = sequence.dedup(rs)
-        
-print("All gened words", len(labels))
+for i in rs:
+        gened_words.append(i)
+        if i not in corpus:
+            new_words.append(i)
 
-for i in labels:
-    if i not in corpus:
-        corpus.append(i)
-        new_words.append(i)
+print("New ones:", len(new_words))
 
-print("new ones", len(new_words))
+with open('new_dict.txt', 'w') as f:
+    for item in corpus:
+        f.write(str(item) + '\n')
 
-# with open('new_dict.txt', 'w') as f:
-#     for item in corpus:
-#         f.write(str(item) + '\n')
+# with open('new_words.txt', 'w') as ff:
+#     for item in new_words:
+#         ff.write(str(item) + '\n')
 
-with open('new_words.txt', 'w') as ff:
-    for item in new_words:
-        ff.write(str(item) + '\n')
+with open('gened_words.txt', 'w') as ffc:
+    for item in gened_words:
+        ffc.write(str(item) + '\n')
 
 # with open('new_sg.txt', 'w') as ffy:
 #     for item in sg:
