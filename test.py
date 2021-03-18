@@ -1,39 +1,45 @@
 from wordseg import WordSegment, sequence
 
 corpus = open(
-    r"doc/dictionary.txt", encoding="utf-8"
-    ).readlines()
+    "doc/dictionary.txt", encoding="utf-8"
+    ).read().splitlines()
+
+# corpus = [line.replace('\n', '') for line in corpus]
 
 news = open(
-    r"doc/news_0.txt", encoding="utf-8"
+    "doc/news_0.txt", encoding="utf-8"
     ).read()
 
-# existing words count
-print(len(corpus))
+# existing words count 85581
 
 new_words = []
 
-ws = WordSegment(news, max_word_len=3, min_aggregation=1, min_entropy=0.5)
-rs = ws.genWords(news)
+ws = WordSegment(news, max_word_len=8, min_freq=0.00005, min_aggregation=50, min_entropy=1)
+# sg = ws.segSentence(news)
+rs = ws.words
 
-labels = [i.text for i in rs]
-print(labels)
-labels = sequence.dedup(labels)
+labels = sequence.dedup(rs)
+        
+print("All gened words", len(labels))
 
 for i in labels:
     if i not in corpus:
-        corpus.append(i+ "\n")
+        corpus.append(i)
         new_words.append(i)
 
-with open('new_dict.txt', 'w') as f:
-    for item in corpus:
-        f.write(str(item) + '\n')
+print("new ones", len(new_words))
+
+# with open('new_dict.txt', 'w') as f:
+#     for item in corpus:
+#         f.write(str(item) + '\n')
 
 with open('new_words.txt', 'w') as ff:
     for item in new_words:
         ff.write(str(item) + '\n')
 
-
+# with open('new_sg.txt', 'w') as ffy:
+#     for item in sg:
+#         ffy.write(str(item) + '\n')
 
 # 85581
 

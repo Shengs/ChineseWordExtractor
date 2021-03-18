@@ -8,8 +8,8 @@ Reference: http://www.matrix67.com/blog/archives/5044
 
 import re
 
-from . probability import entropyOfList
-from . sequence import genSubparts, genSubstr
+from .probability import entropyOfList
+from .sequence import genSubparts, genSubstr
 
 
 
